@@ -7,35 +7,46 @@ clear all;
 
 % choose one
 % ACTION_SWITCH = 'RUNandSAVE';
-ACTION_SWITCH = 'LOADandPLOT';
-% ACTION_SWITCH = 'LOADandCOUNT';
+% ACTION_SWITCH = 'LOADandPLOT';
+ACTION_SWITCH = 'LOADandCOUNT';
 
 % choose one
 % RULE_SWITCH = 'SH'; % StandardHomeo
 % RULE_SWITCH = 'CH'; % CrossHomeo
-% RULE_SWITCH = 'TF'; % TwoFactor
-RULE_SWITCH = 'GD'; % gradient-descent TwoFactor (with anti-homeo)
+% RULE_SWITCH = 'TT'; % TwoTerm-Homeo
+% RULE_SWITCH = 'TH'; % TwoTerm-Hybrid
+RULE_SWITCH = 'TA'; % TwoTerm with "automatic" anti-homeo
 
 
 
 switch RULE_SWITCH
 	case 'SH'
-		data_filename = 'grid_standardHomeo_1.mat';
-% 		data_filename = 'grid_standardHomeo_2.mat';
+% 		data_filename = 'grid_standardHomeo_1.mat';
+		data_filename = 'grid_standardHomeo_2.mat';
 % 		data_filename = 'grid_standardHomeo_3.mat';
 		n_steps = 2000;
 	case 'CH'
 		data_filename = 'grid_crossHomeo_1.mat';
 		n_steps = 1000;
-	case 'TF'
-		data_filename = 'grid_twoFactor_1.mat';
-% 		data_filename = 'grid_twoFactor_2.mat';
+	case 'TT'
+% 		data_filename = 'grid_twoTermHomeo_1.mat';
+% 		data_filename = 'grid_twoTermHomeo_2.mat';
+		data_filename = 'grid_twoTermHomeo_3.mat';
 		n_steps = 1000;
-	case 'GD'
-		data_filename = 'grid_gradDescent_1.mat';
-% 		data_filename = 'grid_gradDescent_2.mat';
+	case 'TH'
+% 		data_filename = 'grid_twoTermHybrid_1.mat';
+% 		data_filename = 'grid_twoTermHybrid_2.mat';
+		data_filename = 'grid_twoTermHybrid_3.mat';
 		n_steps = 1000;
+	case 'TA'
+% 		data_filename = 'grid_twoTermAuto_1.mat';
+% 		data_filename = 'grid_twoTermAuto_2.mat';
+		data_filename = 'grid_twoTermAuto_3.mat';
+		n_steps = 1000;
+% 		data_filename = 'grid_gradDescent_auto_2.mat';
+% 		n_steps = 2000;
 end
+
 dt = 0.1;					% Time Step ms
 t = dt*[1:n_steps];			% Time Array ms
 
@@ -52,15 +63,16 @@ tau_E = 10;
 tau_I = 2;
 alpha_EE = 0.02;
 alpha_EI = 0.02;
-alpha_IE = 0.02;
-alpha_II = 0.02;
+alpha_IE = 0.0145;
+alpha_II = 0.0145;
 alpha = 0.02;%0.01;%0.02;
 beta = 0.02;%0.05;%0.02;
-beta_E = 0.01;
-beta_I = 0.01;
+beta_E = 0.015;
+beta_I = 0.015;
+delta = 0.01;
 
-params = cell2struct({g_E,g_I,E_set,I_set,Theta_E,Theta_I,tau_E,tau_I,alpha_EE,alpha_EI,alpha_IE,alpha_II,alpha,beta,beta_E,beta_I},...
-		{'g_E','g_I','E_set','I_set','Theta_E','Theta_I','tau_E','tau_I','alpha_EE','alpha_EI','alpha_IE','alpha_II','alpha','beta','beta_E','beta_I'},2);
+params = cell2struct({g_E,g_I,E_set,I_set,Theta_E,Theta_I,tau_E,tau_I,alpha_EE,alpha_EI,alpha_IE,alpha_II,alpha,beta,beta_E,beta_I,delta},...
+		{'g_E','g_I','E_set','I_set','Theta_E','Theta_I','tau_E','tau_I','alpha_EE','alpha_EI','alpha_IE','alpha_II','alpha','beta','beta_E','beta_I','delta'},2);
 
 
 % % numerics
@@ -121,10 +133,12 @@ if strcmp(ACTION_SWITCH,'RUNandSAVE')
 							W = ode4(@(t,W) kernel_standardHomeo(t,W,f_up,params),t(1),dt,t(end),W_ini);
 						case 'CH'
 							W = ode4(@(t,W) kernel_crossHomeo(t,W,f_up,params),t(1),dt,t(end),W_ini);
-						case 'TF'
-							W = ode4(@(t,W) kernel_twoFactor(t,W,f_up,params),t(1),dt,t(end),W_ini);
-						case 'GD'
-							W = ode4(@(t,W) kernel_gradDescent(t,W,f_up,params),t(1),dt,t(end),W_ini);
+						case 'TT'
+							W = ode4(@(t,W) kernel_twoTermHomeo(t,W,f_up,params),t(1),dt,t(end),W_ini);
+						case 'TH'
+							W = ode4(@(t,W) kernel_twoTermHybrid(t,W,f_up,params),t(1),dt,t(end),W_ini);
+						case 'TA'
+							W = ode4(@(t,W) kernel_twoTermAuto(t,W,f_up,params),t(1),dt,t(end),W_ini);
 					end
 					W_grid(nee,nei,nie,nii,:,:) = W;
 				end
@@ -152,7 +166,7 @@ elseif strcmp(ACTION_SWITCH,'LOADandPLOT')
 	W_IE_lims = [0 W_IEinigrid(end)];
 	W_II_lims = [0 W_IIinigrid(end)];
 	% choose one value of W_II
-	W_II_idx = 1;
+	W_II_idx = 3;
 
 
 	fsize = 12;
@@ -185,7 +199,13 @@ elseif strcmp(ACTION_SWITCH,'LOADandPLOT')
 					W_EI(plot_limits) = [];
 					W_IE(plot_limits) = [];
 					W_II(plot_limits) = [];
-					if ~isnan(W_EE)
+					WEE_end = W_EE(end);
+					WEI_end = W_EI(end);
+					WIE_end = W_IE(end);
+					WII_end = W_II(end);
+					E_end = E_up(WEE_end,WEI_end,WIE_end,WII_end);
+					I_end = I_up(WEE_end,WEI_end,WIE_end,WII_end);
+					if (abs(E_end-E_set)<delta*E_set && abs(I_end-I_set)<delta*I_set)
 						% basin of attraction
 						plot3(W_EE,W_IE,W_EI,'g-','linewidth',lwidth);
 						hold on;
@@ -260,7 +280,7 @@ elseif strcmp(ACTION_SWITCH,'LOADandPLOT')
 
 % 	print '-dpng' '-r150' 'crossHomeo_3Dview.png';
 % 	print '-dpng' '-r150' 'crossHomeo_2Dview.png';
-% 	print '-dpng' '-r150' 'twoFactor_3Dview.png';
+% 	print '-dpng' '-r150' 'twoTerm_3Dview.png';
 
 
 elseif strcmp(ACTION_SWITCH,'LOADandCOUNT')
@@ -288,7 +308,7 @@ elseif strcmp(ACTION_SWITCH,'LOADandCOUNT')
 					WII = W_grid_end(nee,nei,nie,nii,4);
 					E_end = E_up(WEE,WEI,WIE,WII);
 					I_end = I_up(WEE,WEI,WIE,WII);
-					if (abs(E_end-E_set)<0.01*E_set && abs(I_end-I_set)<0.1*I_set)
+					if (abs(E_end-E_set)<delta*E_set && abs(I_end-I_set)<delta*I_set)
 						EI_end(nee,nei,nie,nii) = 1;
 					end
 				end

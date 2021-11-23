@@ -1,16 +1,14 @@
-%% CrossHomeo learning rule
+%% Two-Term learning rule
+% (cross-homeo + homeo)
 
-
-function dWdt = kernel_crossHomeo(t,W,f_up,params)
+function dWdt = kernel_twoTermHomeo(t,W,f_up,params)
 
 	E_set = params.E_set;
 	I_set = params.I_set;
 	Theta_E = params.Theta_E;
 	Theta_I = params.Theta_I;
-	alpha_EE = params.alpha_EE;
-	alpha_EI = params.alpha_EI;
-	alpha_IE = params.alpha_IE;
-	alpha_II = params.alpha_II;
+	alpha = params.alpha;
+	beta = params.beta;
 	W_EE = W(1);
 	W_EI = W(2);
 	W_IE = W(3);
@@ -28,19 +26,19 @@ function dWdt = kernel_crossHomeo(t,W,f_up,params)
 		I = 0;
 	end
 
-	dWEEdt = alpha_EE*E*(I_set - I);
+	dWEEdt = alpha*E*(I_set - I) + beta*E*(E_set - E);
 	if (W_EE<=0 && dWEEdt<=0)	% if WEE<0 stop updating, unless dWEEdt>0
 		dWEEdt = 0;
 	end
-	dWEIdt = -alpha_EI*I*(I_set - I);
+	dWEIdt = -alpha*I*(I_set - I) - beta*I*(E_set - E);
 	if (W_EI<=0 && dWEIdt<=0)	% if WEI<0 stop updating, unless dWEIdt>0
 		dWEIdt = 0;
 	end
-	dWIEdt = -alpha_IE*E*(E_set - E);
+	dWIEdt = -alpha*E*(E_set - E) + beta*E*(I_set - I);
 	if (W_IE<=0 && dWIEdt<=0)	% if WIE<0 stop updating, unless dWIEdt>0
 		dWIEdt = 0;
 	end
-	dWIIdt = alpha_II*I*(E_set - E);
+	dWIIdt = alpha*I*(E_set - E) - beta*I*(I_set - I);
 	if (W_II<=0 && dWIIdt<=0)	% if WII<0 stop updating, unless dWIIdt>0
 		dWIIdt = 0;
 	end
