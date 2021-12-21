@@ -47,7 +47,7 @@ sorting=none
 
 \section{Summary of results}
 
-In this section we describe the general approach and results of the analytical stability analyses of the joint neural and synaptic learning rules subsystems. We express results in terms of the "free weights" $W_{\EE}$ and $W_{\IE}$. In Section \ref{sec.Details} we provide a detailed description of the approach. .
+In this section we describe the general results of the analytical stability analyses of the joint neural and synaptic learning rules subsystems. We express results in terms of the ``free weights'' $W_{\EE}$ and $W_{\IE}$. Subscript ``up'' is used to identify activity at the nontrivial fixed point where $E$ and $I$ are larger than zero (as opposed to ``down'' where $E=I=0$ which is the other possible solution). In Section \ref{sec.Details} we provide a detailed description of the approach.
 
 
 \subsection{{\em Homeostatic} learning rule}
@@ -63,7 +63,7 @@ In continuous-time dynamics, the equations for the Homeostatic learning rule are
 \label{eq.SH_summary}
 \end{equation}
 
-\noindent The condition for the Up-state to be stable (i.e., the two nonzero eigenvalues to have negative real parts, see Section \ref{sec.Details}) under this rule is:
+\noindent The condition for the fixed point to be stable (i.e., the two nonzero eigenvalues to have negative real parts, see Section \ref{sec.Details}) under this rule is:
 \begin{equation}
 \begin{aligned}
 (E_{\set}^2 \alpha_{\EE} & + I_{\set}^2 \alpha_{\EI}) E_{\set} g_E W_{\IE\up} \\
@@ -80,7 +80,7 @@ In continuous-time dynamics, the equations for the Homeostatic learning rule are
 \centering
 \includegraphics[width=\linewidth]{SH_stability}
 \includegraphics[width=\linewidth]{SH_stability_slowInh.pdf}
-\caption{Regions of stability, {\em Homeostatic} learning rule. (Top) For biologically backed parameter values (Table \ref{tab.params}) and learning rates of the same value ($\alpha_{\XY} = 0.02$), the stability region of the Homeostatic learning rule has little overlap with the region where the neural subsystem is stable. (Bottom) Setting $\alpha_{\EE}=\alpha_{\EI}=0.02$ and $\alpha_{\IE}=\alpha_{\II}=0.0002$ enlarges the stability region of the learning rule and makes it overlap with the stability region of the neural subsystem.
+\caption{Regions of stability, {\em Homeostatic} learning rule. (Top) For biologically backed parameter values (Table \ref{tab.params}) and learning rates of the same value ($\alpha_{\XY} = 0.02$), the stability region of the Homeostatic learning rule (left of black line) has little overlap with the region where the neural subsystem is stable (triangle between the two green lines in the top-left quadrant). (Bottom) Setting $\alpha_{\EE}=\alpha_{\EI}=0.02$ and $\alpha_{\IE}=\alpha_{\II}=0.0002$ enlarges the stability region of the learning rule and makes it overlap with the stability region of the neural subsystem.
 Every label is on the side where the corresponding condition holds (synaptic stable: Eq.\ \ref{eq.SH_stable_cond_v1_summary}; detcond stable: Eq.\ \ref{eq.detcond_orig}; trcond stable: Eq.\ \ref{eq.tracecond_orig}; positive $W_{\EI}$: Eq.\ \ref{eq.positive_WEI}; positive $W_{\II}$: Eq.\ \ref{eq.positive_WII}; paradoxical: Eq.\ \ref{eq.paradoxical}).}
 \label{fig.SH_stability}
 \end{figure}
@@ -124,11 +124,11 @@ See Section \ref{sec.SH_details} for a detailed analysis.
 
 \subsection{Homeo-antiHomeo variations}
 
-The stability condition in the previous section was obtained by assuming all learning rates are positive. Interestingly, if some of them are negative then the Up-state may still be stable. A negative learning rate can be interpreted as the corresponding equation being {\em anti}-homeostatic, i.e.\ if the neural activity ($E$ or $I$) departs from its setpoint then the rule will drive it even farther away. While this kind of behavior would be usually deemed undesired, it is worth considering due to its relationship with the paradoxical regime.
+The stability condition in the previous section was obtained by assuming all learning rates are positive. Interestingly, if some of them are negative then the fixed point may still be stable. A negative learning rate can be interpreted as the corresponding equation being {\em anti}-homeostatic, i.e.\ if the neural activity ($E$ or $I$) departs from its setpoint then the rule will drive it even farther away. While this kind of behavior would be usually deemed undesired, it is worth considering due to its relationship with the paradoxical regime.
 
 In this section we consider the Homeostatic rule, Eq.\ \ref{eq.SH_equation}, and let the learning rates $\alpha_{\XY}$ be either positive or negative. The particular case where all learning rates are positive corresponds to the original Homeostatic learning rule.
 
-Once we free the signs of the learning rates, the Up-state needs two conditions to be stable:
+Once we free the signs of the learning rates, the fixed point needs two conditions to be stable:
 \begin{eqnarray}
 & \begin{aligned}
 (R^2 \alpha_3 + & \alpha_4)(W_{\EE\up} \, g_E  - 1)g_I \\
@@ -151,7 +151,7 @@ R & = E_{\set}/I_{\set} \\
 \end{aligned}
 \end{displaymath}
 
-\noindent Eq.\ \ref{eq.HaH_stable_cond1} is equal to the stability condition of the original Homeostatic rule (Eq.\ \ref{eq.SH_stable_cond_v2_summary}). The additional condition Eq.\ \ref{eq.HaH_stable_cond2} is very interesting in that it allows the Up-state to be stable, for instance, under a full anti-Homeo learning rule where all four learning rates are negative (leading to $\alpha_{2,3,4}$ all positive).
+\noindent Eq.\ \ref{eq.HaH_stable_cond1} is equal to the stability condition of the original Homeostatic rule (Eq.\ \ref{eq.SH_stable_cond_v2_summary}). The additional condition Eq.\ \ref{eq.HaH_stable_cond2} is very interesting in that it allows the fixed point to be stable, for instance, under a full anti-Homeo learning rule where all four learning rates are negative (leading to $\alpha_{2,3,4}$ all positive).
 
 See details in the corresponding section of the SageMath-Jupyter notebook:
 
@@ -192,7 +192,7 @@ In continuous-time dynamics, the equations for the Cross-Homeostatic learning ru
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\linewidth]{CH_stability}
-\caption{Stability of the {\em Cross-Homeostatic} rule. The rule is stable for any parameter value; the Up-state is thus stable where the neural subsystem is stable, i.e.\ in the upper right region between the two green lines. Every label is on the side where the corresponding condition  holds (detcond stable: Eq.\ \ref{eq.detcond_orig}; trcond stable: Eq.\ \ref{eq.tracecond_orig}; positive $W_{\EI}$: Eq.\ \ref{eq.positive_WEI}; positive $W_{\II}$: Eq.\ \ref{eq.positive_WII}; paradoxical: Eq.\ \ref{eq.paradoxical}). Parameter values as in Table \ref{tab.params}.}
+\caption{Stability of the {\em Cross-Homeostatic} rule. The rule is stable for any parameter value; the fixed point is thus stable where the neural subsystem is stable, i.e.\ in the upper right region between the two green lines. Every label is on the side where the corresponding condition  holds (detcond stable: Eq.\ \ref{eq.detcond_orig}; trcond stable: Eq.\ \ref{eq.tracecond_orig}; positive $W_{\EI}$: Eq.\ \ref{eq.positive_WEI}; positive $W_{\II}$: Eq.\ \ref{eq.positive_WII}; paradoxical: Eq.\ \ref{eq.paradoxical}). Parameter values as in Table \ref{tab.params}.}
 \label{fig.CH_stability}
 \end{figure}
 
@@ -205,7 +205,7 @@ This stability condition can be put in a simpler form by switching to $W_{\EI}$ 
 \label{eq.CH_stable_cond_v2}
 \end{equation}
 
-\noindent (where $R$ and $\alpha_{2,3,4}$ are defined as in the previous subsection). This condition is always satisfied because the weights and parameters are positive definite and thus the rule is stable for any choice of parameter values (as long as the neural subsystem is). Fig.\ \ref{fig.CH_stability} shows the stability region of the neural subsystem for the set of parameter values of Table \ref{tab.params}. Any choice of values for the weights $W_{\EE}$ and $W_{\IE}$ within the stability region of the neural subsystem will lead to a stable Up-state.
+\noindent (where $R$ and $\alpha_{2,3,4}$ are defined as in the previous subsection). This condition is always satisfied because the weights and parameters are positive definite and thus the rule is stable for any choice of parameter values (as long as the neural subsystem is). Fig.\ \ref{fig.CH_stability} shows the stability region of the neural subsystem for the set of parameter values of Table \ref{tab.params}. Any choice of values for the weights $W_{\EE}$ and $W_{\IE}$ within the stability region of the neural subsystem will lead to a stable fixed point.
 
 See Section \ref{sec.otherRules_details} for a detailed analysis.
 
@@ -315,7 +315,7 @@ The equations for the SynapticScaling learning rule in continuous-time dynamics 
 \label{eq.SS_summary}
 \end{equation}
 
-\noindent and the condition for the Up-state to be stable under this rule is
+\noindent and the condition for the fixed point to be stable under this rule is
 \begin{equation}
 (W_{\EE\up}g_E - 1)a < (W_{\II\up}g_I + 1)b
 \label{eq.SS_stable_cond_v1}
@@ -331,7 +331,7 @@ b = & \, E_{\set\up} W_{\EE\up}g_E \\
 \end{aligned}
 \end{displaymath}
 
-\noindent (where $\alpha_{2,3,4}$ are defined as in previous subsections). This stability condition does not hold for biologically backed parameter values unless the dynamics of the weights onto the inhibitory neuron are slow enough (and in a few fine-tuned cases). To show this, we express the stability condition in terms of the free weights $W_{\EE}$ and $W_{\IE}$ and plot it with parameter values as in Table \ref{tab.params} and equal rates ($\alpha_{\XY}=0.02$; Figure \ref{fig.SS_stability} top left). The stability condition is a homographic function (i.e.\ a hyperbola) with stability regions in its upper-left and lower-right quadrants---entirely outside the stability region of the neural subsystem. If the dynamics of the weights onto the excitatory neuron are made slower, the homographic function is even steeper (bottom left); if the weights onto the inhibitory neuron are made slower instead, the stability regions switch and overlap with the stability region of the neural subsystem, making the Up-state stable (top left).
+\noindent (where $\alpha_{2,3,4}$ are defined as in previous subsections). This stability condition does not hold for biologically backed parameter values unless the dynamics of the weights onto the inhibitory neuron are slow enough (and in a few fine-tuned cases). To show this, we express the stability condition in terms of the free weights $W_{\EE}$ and $W_{\IE}$ and plot it with parameter values as in Table \ref{tab.params} and equal rates ($\alpha_{\XY}=0.02$; Figure \ref{fig.SS_stability} top left). The stability condition is a homographic function (i.e.\ a hyperbola) with stability regions in its upper-left and lower-right quadrants---entirely outside the stability region of the neural subsystem. If the dynamics of the weights onto the excitatory neuron are made slower, the homographic function is even steeper (bottom left); if the weights onto the inhibitory neuron are made slower instead, the stability regions switch and overlap with the stability region of the neural subsystem, making the fixed point stable (top left).
 
 It is illustrative to consider the particular case where all learning rates are equal. In this case the stability condition, Eq.\ \ref{eq.SS_stable_cond_v1}, doesn't depend on the learning rates and takes the simpler form:
 \begin{equation}
@@ -393,7 +393,7 @@ The equations for the ForcedBalance learning rule are
 \label{eq.FB_summary}
 \end{equation}
 
-\noindent and the conditions for the Up-state to be stable under this rule are
+\noindent and the conditions for the fixed point to be stable under this rule are
 \begin{equation}
 \begin{aligned}
 a_1 + b_1(W_{\II\up} \, g_I + 1) & < b_1^\prime(W_{\EE\up} \, g_E - 1) \\
@@ -451,11 +451,11 @@ We analyze the whole neural+synaptic system for every synaptic learning rule con
 \item Take the combined neural+synaptic system and nondimensionalize all variables \cite[see Sections 1.2 and 1.4 of Ref.\ ][]{Keener1998}\cite[see Section 3.5 of Ref.\ ][]{Strogatz2018}, so that the two different time scales are evident (fast neural, slow synaptic).
 \item Make a quasi-steady state (QSS) approximation of the neural subsystem \cite{Keener1998,Strogatz2018}. This means we will consider the neural subsystem is fast enough so that it converges ``instantaneously'' (when compared to the synaptic subsystem) to its corresponding fixed point. 
 For this we will require that the stability conditions of the neural subsystem are satisfied (see below).
-\item Find the steady-state solution of the synaptic subsystem, i.e.\ the Up-state fixed point; compute the Jacobian of the synaptic subsystem at the Up-state; compute the eigenvalues of the Jacobian \cite{Strogatz2018,Wiggins1996}. Two out of the four eigenvalues are expected to be zero because the Up-state is not an isolated fixed point of the system but a continuous 2D plane in 4D weight space.
-\item Address (linear) stability. If both nonzero eigenvalues have negative real part, then the Up-state is stable under the learning rule; if at least one of the nonzero eigenvalues has positive real part, then the Up-state is unstable \cite{Strogatz2018,Wiggins1996}. (A note on abuse of notation: we might say indistinctly ``the Up-state is stable/unstable'' and ``the learning rule is stable/unstable''.)
+\item Find the steady-state solution of the synaptic subsystem, i.e.\ the fixed point; compute the Jacobian of the synaptic subsystem at the fixed point; compute the eigenvalues of the Jacobian \cite{Strogatz2018,Wiggins1996}. Two out of the four eigenvalues are expected to be zero because the fixed point is not an isolated fixed point of the system but a continuous 2D plane in 4D weight space.
+\item Address (linear) stability. If both nonzero eigenvalues have negative real part, then the fixed point is stable under the learning rule; if at least one of the nonzero eigenvalues has positive real part, then the fixed point is unstable \cite{Strogatz2018,Wiggins1996}. (A note on abuse of notation: we might say indistinctly ``the fixed point is stable/unstable'' and ``the learning rule is stable/unstable''.)
 \end{enumerate}
 
-Eigenvalues and stability in the presence of continuous, i.e. non-isolated, attractors have been discussed in the context of neural networks for eye position control \cite{Seung1996,Seung1998} (keep in mind that the eigenvalues' critical value in these references is 1 instead of zero because they consider eigenvalues of the connectivity matrix alone, whereas we consider eigenvalues of the whole linear part). As the Up-state is a collection of non-isolated fixed points that form a 2D plane, there is no dynamics along the plane, and the linear stability analysis is enough to fully address stability---we do have two zero eigenvalues, but there is no need to compute the center manifold \cite{Wiggins1996} because the other two eigenvalues represent the whole dynamics around the fixed point and have nonzero real part.
+Eigenvalues and stability in the presence of continuous, i.e. non-isolated, attractors have been discussed in the context of neural networks for eye position control \cite{Seung1996,Seung1998} (keep in mind that the eigenvalues' critical value in these references is 1 instead of zero because they consider eigenvalues of the connectivity matrix alone, whereas we consider eigenvalues of the whole linear part). As the fixed point is a collection of non-isolated fixed points that form a 2D plane, there is no dynamics along the plane, and the linear stability analysis is enough to fully address stability---we do have two zero eigenvalues, but there is no need to compute the center manifold \cite{Wiggins1996} because the other two eigenvalues represent the whole dynamics around the fixed point and have nonzero real part.
 
 In order to apply the tools from Dynamical Systems' theory for flows in a unified way for both the neural and synaptic subsystems, we will switch from a discrete-time description of synaptic weight dynamics (where the change in weight $W$ is represented by $\Delta W$ applied every certain time interval) to a continuous-time description (where the weights are continuously evolving albeit with a long time scale $\tau_0$):
 \begin{displaymath}
@@ -489,7 +489,7 @@ We consider a two-subpopulation model with firing-rate units $E$ and $I$ with Re
 
 \noindent All variables and parameters are definite positive. In this subsection the synaptic weights $W_{\mathit{XY}}$ are fixed.
 
-\subparagraph{Up-state.} The Up-state is the non-trivial fixed point of the system (i.e.\ a steady-state solution where $dE/dt=dI/dt=0$):
+\subparagraph{Neural fixed point.} The fixed point of the neural subsystem in the supreathreshold regime is the solution of $dE/dt=dI/dt=0$:
 \begin{equation}
 \begin{aligned}
 E_{\up} & = (W_{\EI} \, g_I \, \Theta_I - (W_{\II} \, g_I + 1) \, \Theta_E) \, g_E / C \\
@@ -504,10 +504,12 @@ C = W_{\EI} W_{\IE} \, g_E\, g_I - (W_{\II} \, g_I + 1)(W_{\EE} \, g_E - 1)
 \label{eq.den}
 \end{equation}
 
-The activity of the excitatory and inhibitory subpopulations at the Up-state, $E_{\up}$ and $I_{\up}$, depend on all weight values. Only some of the combinations, however, lead to a stable steady state. We compute the stability conditions in the following subsection.
+\noindent We named it with the subscript ``up'' to distinguish it from the trivial solution ``down'' where $E$ and $I$ are zero (and the neural subsystem is below threshold).
+
+The activity of the excitatory and inhibitory subpopulations at the nontrivial fixed point, $E_{\up}$ and $I_{\up}$, depend on all weight values. Only some of the combinations, however, lead to a stable steady state. We compute the stability conditions in the following subsection.
 
 
-\subsubsection{Stability of neural fixed point (Up-state)}
+\subsubsection{Stability of the nontrivial neural fixed point}
 
 The Jacobian matrix, that is the matrix of first derivatives, gives information regarding the stability of fixed points: if the real parts of its eigenvalues are all negative, then the fixed point is stable.
 
@@ -525,7 +527,7 @@ W_{\IE} g_I/\tau_I & -(W_{\II} g_I + 1)/\tau_I
 \label{eq.neural.eigvals}
 \end{equation}
 
-\noindent where $\Tr$ and $\De$ are the trace and determinant of the matrix, respectively. For eigenvalues either complex or purely real, their real parts are negative (and thus the Up-state is stable) when $\De>0$ and $\Tr<0$, that is:
+\noindent where $\Tr$ and $\De$ are the trace and determinant of the matrix, respectively. For eigenvalues either complex or purely real, their real parts are negative (and thus the fixed point is stable) when $\De>0$ and $\Tr<0$, that is:
 \begin{eqnarray}
 & W_{\EI} W_{\IE} g_E g_I > (W_{\EE} g_E - 1)(W_{\II} g_I + 1) \label{eq.detcond_orig}\\
 & (W_{\II} g_I + 1)\tau_E > (W_{\EE} g_E - 1)\tau_I
@@ -538,9 +540,9 @@ In the following, we will require that the stability conditions of the neural su
 
 
 
-\subsubsection{Weight values consistent with an Up-state}
+\subsubsection{Weight values consistent with the neural fixed point}
 
-The Up-state relationships, Eq.\ \ref{eq.upstate_orig}, are expressed as the $E$ and $I$ values resulting from a given set of weight values. If we set instead $E$ and $I$ to their target values $E_{\set}$ and $I_{\set}$ and solve for the weights, we get the weight values that are consistent with a given Up-state activity:
+The fixed point relationships, Eq.\ \ref{eq.upstate_orig}, are expressed as the $E$ and $I$ values resulting from a given set of weight values. If we set instead $E$ and $I$ to their target values $E_{\set}$ and $I_{\set}$ and solve for the weights, we get the weight values that are consistent with a given fixed point activity:
 \begin{equation}
 \begin{aligned}
 W_{\EI\up} & = \frac{(E_{\set} W_{\EE\up} - \Theta_E) \, g_E - E_{\set}}{I_{\set} \, g_E} \\
@@ -571,7 +573,7 @@ W_{\EE} \, g_E - 1 >0
 \label{eq.paradoxical}
 \end{equation}
 
-The paradoxical effect can also be seen in a plot of the Up-state values $E_{\up}$ and $I_{\up}$ (Eq.\ \ref{eq.upstate_orig}) as a function of each individual weight. Specifically, from a naive point of view $I_{\up}$ should increase when $W_{\IE}$ is increased, and decrease when $W_{\II}$ is increased; however, it does the opposite in either case (see Figure \ref{fig.paradoxical}).
+The paradoxical effect can also be seen in a plot of the fixed point values $E_{\up}$ and $I_{\up}$ (Eq.\ \ref{eq.upstate_orig}) as a function of each individual weight. Specifically, from a naive point of view $I_{\up}$ should increase when $W_{\IE}$ is increased, and decrease when $W_{\II}$ is increased; however, it does the opposite in either case (see Figure \ref{fig.paradoxical}).
 
 
 
@@ -593,7 +595,7 @@ $g_I$ & = & 4 & & $g_E$ & = & 1 \\
 $\Theta_I$ & = & 25 & & $\Theta_E$ & = & 4.8 \\
 $\tau_I$ & = & 2 & & $\tau_E$ & = & 10
 \end{tabular}
-\caption{Parameter values throughout the Supplementary Material. This set of parameter values makes the neural subsystem to be in the paradoxical regime (i.e.\ the Up-state is an inhibition-stabilized fixed point \cite{Sadeh2021}). For non-paradoxical conditions, see Section \ref{sec.nonparadoxical}.}
+\caption{Parameter values throughout the Supplementary Material. This set of parameter values makes the neural subsystem to be in the paradoxical regime (i.e.\ the fixed point is an inhibition-stabilized fixed point \cite{Sadeh2021}). For non-paradoxical conditions, see Section \ref{sec.nonparadoxical}.}
 \label{tab.params}
 \end{table}
 
@@ -625,7 +627,7 @@ In continuous-time dynamics, the Homeostatic learning rule reads:
 
 \noindent where $\alpha_{\XY}$ $(X,Y=E,I)$ are the learning rates (with appropriate units) setting the time scales of the weight dynamics, and $E_{\set}$ and $I_{\set}$ are the set points of the excitatory and inhibitory subpopulations, respectively.
 
-The fixed points of the system (i.e.\ steady states) are determined by setting all derivatives to zero. There is a non-trivial fixed point compatible with the neural subsystem being above threshold: the Up-state, that is the set of weight values such that:
+The fixed points of the system (i.e.\ steady states) are determined by setting all derivatives to zero. There is a non-trivial fixed point compatible with the neural subsystem being above threshold: it is the set of weight values such that:
 \begin{equation}
 \begin{aligned}
 E_{\up} & = E_{\set} \\
@@ -634,7 +636,7 @@ I_{\up} & = I_{\set}
 \label{eq.SH_upstate_set}
 \end{equation}
 
-\noindent The values of the weights corresponding to the Up-state are given by the (underdetermined) system defined by equating Eqs.\ \ref{eq.SH_upstate_set} and \ref{eq.upstate_orig}. Since it is a two-equation system for a set of four unknown weights, there are two free weights that we choose to be $W_{\EE\up}$ and $W_{\IE\up}$. The values of the other two are given by Eq.\ \ref{eq.upstate_W}. This means that the Up-state fixed point is actually a continuous set of non-isolated fixed points forming a 2D plane in 4D weight space. In other words, there is an infinite number of weight values compatible with the Up-state (possibly not all stable, though).
+\noindent The values of the weights corresponding to the nontrivial neural fixed point are given by the (underdetermined) system defined by equating Eqs.\ \ref{eq.SH_upstate_set} and \ref{eq.upstate_orig}. Since it is a two-equation system for a set of four unknown weights, there are two free weights that we choose to be $W_{\EE\up}$ and $W_{\IE\up}$. The values of the other two are given by Eq.\ \ref{eq.upstate_W}. This means that the fixed point is actually a continuous set of non-isolated fixed points forming a 2D plane in 4D weight space. In other words, there is an infinite number of weight values compatible with the nontrivial neural fixed point (possibly not all stable, though).
 
 
 \subsubsection{Nondimensionalization}
@@ -719,7 +721,7 @@ The full system in the QSS approximation reads
 
 \noindent where $e_{\qss}$ and $i_{\qss}$ are nonlinear functions of the weights as defined by Eq.\ \ref{eq.SH_upstate_qss}.
 
-Note that the Up-state fixed point, defined by making all derivatives equal to zero, can be expressed as
+Note that the nontrivial neural fixed point, defined by making all derivatives equal to zero, can be expressed as
 \begin{equation}
 \begin{aligned}
 e_{\qss} & = 1 \\
@@ -742,7 +744,7 @@ w_{\II\up} & = R (Rw_{\IE\up} - g) - Rg \theta_I
 
 \subsubsection{Stability condition}
 
-The program for assessing linear stability of the Up-state is as follows: a) compute the Jacobian (the matrix of first derivatives) of Eq.\ \ref{eq.SH_full_norm_qss} and evaluate it at the Up-state; b) compute the eigenvalues of the Jacobian (two of them will be zero because the fixed points form a continuous 2D plane in phase space); c) If the real part of the two nonzero eigenvalues is negative then the Up-state is stable; if at least one of the nonzero eigenvalue has positive real part then the Up-state is unstable.
+The program for assessing linear stability of the fixed point is as follows: a) compute the Jacobian (the matrix of first derivatives) of Eq.\ \ref{eq.SH_full_norm_qss} and evaluate it at the fixed point; b) compute the eigenvalues of the Jacobian (two of them will be zero because the fixed points form a continuous 2D plane in phase space); c) If the real part of the two nonzero eigenvalues is negative then the fixed point is stable; if at least one of the nonzero eigenvalue has positive real part then the fixed point is unstable.
 
 
 \paragraph{Jacobian matrix.}
@@ -768,7 +770,7 @@ J_{22} & = \ldots \\
 \end{aligned}
 \end{displaymath}
 
-In order to have the Jacobian specialized in the Up-state, these expressions are to be substituted by Eqs.\ \ref{eq.SH_upstate_qss}-\ref{eq.SH_upstate_w}.
+In order to have the Jacobian specialized in the fixed point, these expressions are to be substituted by Eqs.\ \ref{eq.SH_upstate_qss}-\ref{eq.SH_upstate_w}.
 
 
 
@@ -806,7 +808,7 @@ To determine the sign of the real part of Eq.\ \ref{eq.SH_eigvals}, first note t
 
 \subsubsection{Analysis of the stability condition}
 
-It is hard to determine whether the stability condition Eq.\ \ref{eq.SH_stable_cond_v1} is satisfied for a general set of parameter values (see numerical analysis below). However, by using the Up-state relationship Eq.\ \ref{eq.upstate_W}, this condition can be re-expressed in a more useful form in terms of $W_{\EE}$ and $W_{\II}$:
+It is hard to determine whether the stability condition Eq.\ \ref{eq.SH_stable_cond_v1} is satisfied for a general set of parameter values (see numerical analysis below). However, by using the fixed point relationship Eq.\ \ref{eq.upstate_W}, this condition can be re-expressed in a more useful form in terms of $W_{\EE}$ and $W_{\II}$:
 \begin{equation}
 \begin{aligned}
 (R^2 \alpha_3 + & \alpha_4)(W_{\EE\up} \, g_E  - 1)g_I \\
@@ -830,7 +832,7 @@ On the other hand, small enough values of $\alpha_3$ and $\alpha_4$ (by making t
 
 
 
-\subsubsection{Relationship between the stability condition and the paradoxical condition}
+\subsubsection{Relationship between the synaptic stability and the paradoxical condition}
 
 The boundary of the stability condition for this learning rule, Eq.\ \ref{eq.SH_stable_cond_v1}, is a linear function in the $(W_{\EE},W_{\IE})$ space with a slope that tends to infinity as the excitatory learning rates ($\alpha_{\EE,\EI}$) tend to zero:
 \begin{displaymath}
@@ -860,7 +862,7 @@ The stability calculations for the rest of the rules follow very similar paths. 
 \subsection{Stability of the rules in a non-paradoxical regime}
 \label{sec.nonparadoxical}
 
-All results above were developed with the neural subsystem set in the paradoxical regime---that is, the region in ($W_{\EE},W_{\IE}$) leading to a stable Up-state was completely within the paradoxical region ($W_{\EE}g_E > 1$). In order to show the importance of the paradoxical behavior for the stability of the learning rules, we also computed the stability conditions of every learning rule in a more general setting where the excitatory subpopulation in the neural subsystem has an external, constant, excitatory input current $I_{\ext}$. This allows the neural subsystem to display both paradoxical and non-paradoxical stable behavior (in the second case, at the expense of the Up-state not being an inhibition-stabilized fixed point). The results can be found in the following SageMath-Jupyter notebooks:
+All results above were developed with the neural subsystem set in the paradoxical regime---that is, the region in ($W_{\EE},W_{\IE}$) leading to a stable fixed point was completely within the paradoxical region ($W_{\EE}g_E > 1$). In order to show the importance of the paradoxical behavior for the stability of the learning rules, we also computed the stability conditions of every learning rule in a more general setting where the excitatory subpopulation in the neural subsystem has an external, constant, excitatory input current $I_{\ext}$. This allows the neural subsystem to display both paradoxical and non-paradoxical stable behavior (in the second case, at the expense of the fixed point not being an inhibition-stabilized fixed point). The results can be found in the following SageMath-Jupyter notebooks:
 \begin{itemize}
 \item[] {\tt upstates-Neural subsystem stability-with Iext.ipynb}
 \item[] {\tt upstates-Homeostatic stability-with Iext.ipynb}
@@ -877,7 +879,7 @@ All results above were developed with the neural subsystem set in the paradoxica
 
 (SageMath code in the Supplementary Material: {\tt upstates-Loss function.ipynb})
 
-Here we show how to compute the learning rule starting from a loss function. Then we make an approximation by considering the weight values are close to the values corresponding to an Up-state.
+Here we show how to compute the learning rule starting from a loss function. Then we make an approximation by considering the weight values are close to the values corresponding to a fixed point.
 
 
 \subsection{General prescription}
@@ -1043,7 +1045,7 @@ Putting everything together, the learning rules Eq.\ \ref{eq.LF_generic_rule} ar
 
 We want simpler expressions for the learning rules. Note that the exact expressions above all have a homeostatic factor (either $E - E_{\set}$ or $I - I_{\set}$) and a presynaptic factor (either $E$ or $I$), while the rest are complicated expressions coming from the derivatives $\partial E/\partial W_{\XY}$ and  $\partial I/\partial W_{\XY}$. We want to keep the homeostatic and presynaptic factors as they are while simplifying the rest of the expressions (explicit dependence on the weights including $C$) by performing a lowest-order Taylor series expansion of the explicit dependence of Eqs.\ \ref{eq.LF_explicit_derivs} on the weights. Although this is not a textbook Taylor expansion of the full expressions, it is very informative because the results can be much more easily interpreted (for a similar approach see \cite{Mackwood2020}).
 
-We perform a zeroth-order approximation of the derivatives $\partial E/\partial W_{\XY}$ and  $\partial I/\partial W_{\XY}$ as functions of the weights (i.e.\ while holding the presynaptic factors $E$ and $I$ constant) around the Up-state. In this approximation the weights are not small but close to their target values, represented by the relationships Eq.\ \ref{eq.upstate_W}. By substituting the result in Eq.\ \ref{eq.LF_chain_rule}, we get the following approximated learning rules:
+We perform a zeroth-order approximation of the derivatives $\partial E/\partial W_{\XY}$ and  $\partial I/\partial W_{\XY}$ as functions of the weights (i.e.\ while holding the presynaptic factors $E$ and $I$ constant) around the fixed point. In this approximation the weights are not small but close to their target values, represented by the relationships Eq.\ \ref{eq.upstate_W}. By substituting the result in Eq.\ \ref{eq.LF_chain_rule}, we get the following approximated learning rules:
 \begin{equation}
 \begin{aligned}
 \Delta W_{\EE} & = + \alpha_E E(I_{\set} - I) + \beta_E E(E_{\set} - E) \\
@@ -1080,7 +1082,7 @@ D & = \Theta_I W_{\EE\up} g_E - \Theta_E W_{\IE\up} g_E - \Theta_I
 \item $D>0$ as it is equal to the numerator of $I_{\up}$, Eq.\ \ref{eq.upstate_orig} (up to a positive factor), which must be positive because the denominator is.
 \end{itemize}
 
-\noindent Interestingly, note that the learning rate $\beta_I$ can be either negative or positive depending on whether the Up-state where the dynamics is converging to is paradoxical ($W_{\EE\up}g_E - 1 > 0$) or not ($W_{\EE\up}g_E - 1 < 0$).
+\noindent Interestingly, note that the learning rate $\beta_I$ can be either negative or positive depending on whether the fixed point where the dynamics is converging to is paradoxical ($W_{\EE\up}g_E - 1 > 0$) or not ($W_{\EE\up}g_E - 1 < 0$).
 
 
 \noindent Note that the terms with $\alpha_{E,I}$ in the approximated learning rules, Eq.\ \ref{eq.LF_approx}, are exactly equal to the Cross-Homeostatic rules, Eq.\ \ref{eq.CH_equation}. Additionaly, the terms with $\beta_{E,I}$ are exactly equal to the Homeostatic rules, Eq.\ \ref{eq.SH_equation}, unless $\beta_I<0$ which would make the learning rule a Cross-Homeo-antiHomeo hybrid.
