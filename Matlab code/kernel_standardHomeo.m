@@ -15,12 +15,25 @@ function dWdt = kernel_standardHomeo(t,W,f_up,params)
 	W_EI = W(2);
 	W_IE = W(3);
 	W_II = W(4);
+	
+	if (W_EE<0)
+		W_EE = 0;
+	end
+	if (W_EI<0)
+		W_EI = 0;
+	end
+	if (W_IE<0)
+		W_IE = 0;
+	end
+	if (W_II<0)
+		W_II = 0;
+	end
 	E_aux = f_up{1}(W_EE,W_EI,W_IE,W_II);
 	I_aux = f_up{2}(W_EE,W_EI,W_IE,W_II);
 	if (W_EE*E_aux-W_EI*I_aux >= Theta_E)
-		E = E_aux;
+		E = E_aux;	% suprathreshold
 	else
-		E = 0;
+		E = 0;	% subthreshold
 	end
 	if (W_IE*E_aux-W_II*I_aux >= Theta_I)
 		I = I_aux;
@@ -29,21 +42,9 @@ function dWdt = kernel_standardHomeo(t,W,f_up,params)
 	end
 	
 	dWEEdt = alpha_EE*E*(E_set - E);
-	if (W_EE<=0 && dWEEdt<=0)	% if WEE<0 stop updating, unless dWEEdt>0
-		dWEEdt = 0;
-	end
 	dWEIdt = -alpha_EI*I*(E_set - E);
-	if (W_EI<=0 && dWEIdt<=0)	% if WEI<0 stop updating, unless dWEIdt>0
-		dWEIdt = 0;
-	end
 	dWIEdt = alpha_IE*E*(I_set - I);
-	if (W_IE<=0 && dWIEdt<=0)	% if WIE<0 stop updating, unless dWIEdt>0
-		dWIEdt = 0;
-	end
 	dWIIdt = -alpha_II*I*(I_set - I);
-	if (W_II<=0 && dWIIdt<=0)	% if WII<0 stop updating, unless dWIIdt>0
-		dWIIdt = 0;
-	end
 	dWdt = [dWEEdt,dWEIdt,dWIEdt,dWIIdt];
 end
 

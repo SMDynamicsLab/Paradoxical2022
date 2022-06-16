@@ -12,42 +12,55 @@ ACTION_SWITCH = 'LOADandCOUNT';
 
 % choose one
 % RULE_SWITCH = 'SH'; % StandardHomeo
-% RULE_SWITCH = 'CH'; % CrossHomeo
+RULE_SWITCH = 'CH'; % CrossHomeo
 % RULE_SWITCH = 'TT'; % TwoTerm-Homeo
 % RULE_SWITCH = 'TH'; % TwoTerm-Hybrid
-RULE_SWITCH = 'TA'; % TwoTerm with "automatic" anti-homeo
+% RULE_SWITCH = 'TA'; % TwoTerm with "automatic" anti-homeo
 
 
 
 switch RULE_SWITCH
 	case 'SH'
 % 		data_filename = 'grid_standardHomeo_1.mat';
-		data_filename = 'grid_standardHomeo_2.mat';
+% 		data_filename = 'grid_standardHomeo_2.mat';
 % 		data_filename = 'grid_standardHomeo_3.mat';
+% 		data_filename = 'grid_standardHomeo_sat_1.mat';
+% 		data_filename = 'grid_standardHomeo_sat_2.mat';
+		data_filename = 'grid_standardHomeo_sat_3.mat';
 		n_steps = 2000;
 	case 'CH'
-		data_filename = 'grid_crossHomeo_1.mat';
-		n_steps = 1000;
+% 		data_filename = 'grid_crossHomeo_1.mat';
+		data_filename = 'grid_crossHomeo_sat_1.mat';
+		n_steps = 20000;
 	case 'TT'
 % 		data_filename = 'grid_twoTermHomeo_1.mat';
 % 		data_filename = 'grid_twoTermHomeo_2.mat';
-		data_filename = 'grid_twoTermHomeo_3.mat';
+% 		data_filename = 'grid_twoTermHomeo_3.mat';
+% 		data_filename = 'grid_twoTermHomeo_sat_1.mat';
+% 		data_filename = 'grid_twoTermHomeo_sat_2.mat';
+		data_filename = 'grid_twoTermHomeo_sat_3.mat';
 		n_steps = 1000;
 	case 'TH'
 % 		data_filename = 'grid_twoTermHybrid_1.mat';
 % 		data_filename = 'grid_twoTermHybrid_2.mat';
-		data_filename = 'grid_twoTermHybrid_3.mat';
+% 		data_filename = 'grid_twoTermHybrid_3.mat';
+		data_filename = 'grid_twoTermHybrid_sat_1.mat';
+% 		data_filename = 'grid_twoTermHybrid_sat_2.mat';
+% 		data_filename = 'grid_twoTermHybrid_sat_3.mat';
 		n_steps = 1000;
 	case 'TA'
 % 		data_filename = 'grid_twoTermAuto_1.mat';
 % 		data_filename = 'grid_twoTermAuto_2.mat';
-		data_filename = 'grid_twoTermAuto_3.mat';
+% 		data_filename = 'grid_twoTermAuto_3.mat';
+% 		data_filename = 'grid_twoTermAuto_sat_1.mat';
+% 		data_filename = 'grid_twoTermAuto_sat_2.mat';
+		data_filename = 'grid_twoTermAuto_sat_3.mat';
 		n_steps = 1000;
 % 		data_filename = 'grid_gradDescent_auto_2.mat';
 % 		n_steps = 2000;
 end
 
-dt = 0.1;					% Time Step ms
+dt = 0.01;					% Time Step ms
 t = dt*[1:n_steps];			% Time Array ms
 
 
@@ -57,22 +70,26 @@ g_E = 1;
 g_I = 4;
 E_set = 5;
 I_set = 14;
+E_max = 100;
+I_max = 250;
+E_min = 0.1;
+I_min = 0.1;
 Theta_E = 4.8;
 Theta_I = 25;
 tau_E = 10;
 tau_I = 2;
 alpha_EE = 0.02;
 alpha_EI = 0.02;
-alpha_IE = 0.0145;
-alpha_II = 0.0145;
-alpha = 0.02;%0.01;%0.02;
-beta = 0.02;%0.05;%0.02;
-beta_E = 0.015;
-beta_I = 0.015;
+alpha_IE = 0.02;%0.02;%0.0145;
+alpha_II = 0.02;%0.02;%0.0145;
+alpha = 0.0002;%0.01;%0.02;
+beta = 0.005;%0.02;
+beta_E = 0.02;%0.009;%0.02;%0.015;
+beta_I = 0.02;%0.009;%0.02;%0.015;
 delta = 0.01;
 
-params = cell2struct({g_E,g_I,E_set,I_set,Theta_E,Theta_I,tau_E,tau_I,alpha_EE,alpha_EI,alpha_IE,alpha_II,alpha,beta,beta_E,beta_I,delta},...
-		{'g_E','g_I','E_set','I_set','Theta_E','Theta_I','tau_E','tau_I','alpha_EE','alpha_EI','alpha_IE','alpha_II','alpha','beta','beta_E','beta_I','delta'},2);
+params = cell2struct({g_E,g_I,E_set,I_set,E_max,I_max,E_min,I_min,Theta_E,Theta_I,tau_E,tau_I,alpha_EE,alpha_EI,alpha_IE,alpha_II,alpha,beta,beta_E,beta_I,delta},...
+		{'g_E','g_I','E_set','I_set','E_max','I_max','E_min','I_min','Theta_E','Theta_I','tau_E','tau_I','alpha_EE','alpha_EI','alpha_IE','alpha_II','alpha','beta','beta_E','beta_I','delta'},2);
 
 
 % % numerics
@@ -88,28 +105,42 @@ params = cell2struct({g_E,g_I,E_set,I_set,Theta_E,Theta_I,tau_E,tau_I,alpha_EE,a
 W_EIup = @(W_EEup) ((E_set*W_EEup - Theta_E)*g_E - E_set)/(I_set*g_E);
 W_IIup = @(W_IEup) ((E_set*W_IEup - Theta_I)*g_I - I_set)/(I_set*g_I);
 
-% fixed point relationships -s activities
+% fixed point relationships - activities
 E_up = @(W_EE,W_EI,W_IE,W_II) (Theta_I*W_EI*g_I - (W_II*g_I + 1)*Theta_E)*g_E/((W_EI*W_IE*g_I - (W_II*g_I + 1)*W_EE)*g_E + W_II*g_I + 1);
 I_up = @(W_EE,W_EI,W_IE,W_II) ((Theta_I*W_EE*g_I - Theta_E*W_IE*g_I)*g_E - Theta_I*g_I)/((W_EI*W_IE*g_I - (W_II*g_I + 1)*W_EE)*g_E + W_II*g_I + 1);
 f_up = {E_up,I_up};
 
+% % fixed point relationships - activities (with saturation)
+% E_up = @(W_EE,W_EI,W_IE,W_II) min(E_max,Theta_I*W_EI*g_I - (W_II*g_I + 1)*Theta_E)*g_E/((W_EI*W_IE*g_I - (W_II*g_I + 1)*W_EE)*g_E + W_II*g_I + 1);
+% I_up = @(W_EE,W_EI,W_IE,W_II) min(I_max,(Theta_I*W_EE*g_I - Theta_E*W_IE*g_I)*g_E - Theta_I*g_I)/((W_EI*W_IE*g_I - (W_II*g_I + 1)*W_EE)*g_E + W_II*g_I + 1);
+% f_up = {E_up,I_up};
+
 % stability conditions, neural subsystem
 W_IEdetcond = @(W_EE) (Theta_I*W_EE*g_E - Theta_I)/(Theta_E*g_E);	% W_IE smaller than this value
 W_IEtrcond = @(W_EE) (I_set*W_EE*g_E*tau_I + Theta_I*g_I*tau_E - I_set*tau_I)/(E_set*g_I*tau_E);	% W_IE greater than this value
+
+% trace and determinant
+Det = @(W_EE,W_EI,W_IE,W_II) (-((W_EE*g_E-1)/tau_E)*((W_II*g_I+1)/tau_I) + W_EI*W_IE*g_E*g_I/(tau_E*tau_I));
+Tr = @(W_EE,W_EI,W_IE,W_II) ((W_EE*g_E-1)/tau_E - (W_II*g_I+1)/tau_I);
+stable_conds = {Det,Tr};
 
 
 
 if strcmp(ACTION_SWITCH,'RUNandSAVE')
 %% Run: Initial conditions at full 4D grid
 
-	W_EEinigrid = [1:1:10];
-	W_EIinigrid = [0.5:0.5:5];
-	W_IEinigrid = [2:2:20];
-	W_IIinigrid = [1:1:10];
-% 	W_EEinigrid = [1:1:4];
-% 	W_EIinigrid = [0.5:0.5:2];
-% 	W_IEinigrid = [2:2:8];
-% 	W_IIinigrid = [1:1:4];
+% 	W_EEinigrid = [1:1:10];
+% 	W_EIinigrid = [0.5:0.5:5];
+% 	W_IEinigrid = [2:2:20];
+% 	W_IIinigrid = [1:1:10];
+	W_EEinigrid = [0.5:4.5:9.5];
+	W_EIinigrid = [0.5:1.5:3.5];
+	W_IEinigrid = [1:9:19];
+	W_IIinigrid = [1:1:3];
+% 	W_EEinigrid = [15:1:16];
+% 	W_EIinigrid = [12:1:13];
+% 	W_IEinigrid = [10:1:11];
+% 	W_IIinigrid = [12:1:13];
 	W_inigrid = ndgrid(W_EEinigrid,W_EIinigrid,W_IEinigrid,W_IIinigrid);
 
 	NEE = length(W_EEinigrid);
@@ -132,7 +163,8 @@ if strcmp(ACTION_SWITCH,'RUNandSAVE')
 						case 'SH'
 							W = ode4(@(t,W) kernel_standardHomeo(t,W,f_up,params),t(1),dt,t(end),W_ini);
 						case 'CH'
-							W = ode4(@(t,W) kernel_crossHomeo(t,W,f_up,params),t(1),dt,t(end),W_ini);
+% 							W = ode4(@(t,W) kernel_crossHomeo(t,W,f_up,params),t(1),dt,t(end),W_ini);
+							W = ode4_nonneg(@(t,W) kernel_crossHomeo(t,W,f_up,stable_conds,params),t(1),dt,t(end),W_ini);
 						case 'TT'
 							W = ode4(@(t,W) kernel_twoTermHomeo(t,W,f_up,params),t(1),dt,t(end),W_ini);
 						case 'TH'
@@ -166,7 +198,7 @@ elseif strcmp(ACTION_SWITCH,'LOADandPLOT')
 	W_IE_lims = [0 W_IEinigrid(end)];
 	W_II_lims = [0 W_IIinigrid(end)];
 	% choose one value of W_II
-	W_II_idx = 3;
+	W_II_idx = 1;
 
 
 	fsize = 12;
@@ -294,7 +326,8 @@ elseif strcmp(ACTION_SWITCH,'LOADandCOUNT')
 	NII = length(W_IIinigrid);
 
 	W_grid_end = squeeze(W_grid(:,:,:,:,end,:));
-	W_grid_end_in = ~isnan(sum(W_grid_end,5));
+	W_grid_end(W_grid_end<0) = 0;	% some values remain a little just below zero
+	W_grid_end_in = isnan(sum(W_grid_end,5));
 	fraction_in_nan = sum(W_grid_end_in(:))/prod(size(W_grid_end_in));
 
 	EI_end = zeros(NEE,NEI,NIE,NII);
@@ -328,3 +361,75 @@ elseif strcmp(ACTION_SWITCH,'LOADandCOUNT')
 end
 
 %%
+
+
+nee = 1;
+nei = 10;
+nie = 1;
+nii = 1;
+
+W_grid_end = squeeze(W_grid(:,:,:,:,end,:));
+WEE = W_grid_end(nee,nei,nie,nii,1);
+WEI = W_grid_end(nee,nei,nie,nii,2);
+WIE = W_grid_end(nee,nei,nie,nii,3);
+WII = W_grid_end(nee,nei,nie,nii,4);
+E_end = E_up(WEE,WEI,WIE,WII);
+I_end = I_up(WEE,WEI,WIE,WII);
+disp(['E_end=' num2str(E_end) ', I_end=' num2str(I_end)]);
+disp(num2str(abs(E_end-E_set)<delta*E_set && abs(I_end-I_set)<delta*I_set));
+
+
+
+%%
+
+W_XY = 1;
+nee = 3;
+nei = 3;
+nie = 3;
+nii = 1;
+
+W_EE = W_grid_end(nee,nei,nie,nii,1);
+W_EI = W_grid_end(nee,nei,nie,nii,2);
+W_IE = W_grid_end(nee,nei,nie,nii,3);
+W_II = W_grid_end(nee,nei,nie,nii,4);
+E = E_up(W_EE,W_EI,W_IE,W_II);
+I = I_up(W_EE,W_EI,W_IE,W_II);
+disp(['E=' num2str(E) ', I=' num2str(I)]);
+
+
+figure(5);
+clf(5);
+plot(squeeze(W_grid(nee,nei,nie,nii,:,:)),'.-');
+set(gca,'yscale','log');
+% ylim([-1 10]);
+
+
+
+
+
+
+
+
+%%
+
+W_EE = 20;
+W_EI = 0.1;
+W_IE = 10;
+W_II = 2;
+
+E = E_up(W_EE,W_EI,W_IE,W_II);
+I = I_up(W_EE,W_EI,W_IE,W_II);
+disp(['E=' num2str(E) ', I=' num2str(I)]);
+
+
+
+%%
+
+
+(W_EE*E-W_EI*I >= Theta_E && W_IE*E-W_II*I >= Theta_I)
+
+
+
+
+%%
+

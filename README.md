@@ -3,4 +3,6 @@ Saray Soldado-Magraner, Rodrigo Laje, Dean V. Buonomano
 
 - Supplementary Material
 - SageMath code (analytical stability analyses)
-- Matlab code (basin of attraction)
+
+[//]: # "Matlab code (basin of attraction)"
+
