@@ -36,8 +36,8 @@ sorting=none
 
 \begin{document}
 
-\title{\vspace{-2.0cm}Supplementary Material\\{\bf Paradoxical Self-Sustained Dynamics Emerge from Orchestrated Excitatory and Inhibitory Learning Rules}}
-\author{Soldado-Magraner, Laje \& Buonomano 2021}
+\title{\vspace{-2.0cm}Supplementary Material\\{\bf Paradoxical Self-sustained Dynamics Emerge from Orchestrated Excitatory and Inhibitory Homeostatic Rules}}
+\author{Soldado-Magraner, Seay, Laje \& Buonomano 2022}
 \date{\today}
 
 \maketitle
@@ -65,13 +65,11 @@ In continuous-time dynamics, the equations for the Homeostatic learning rule are
 \noindent The condition for the fixed point to be stable (i.e., the two nonzero eigenvalues to have negative real parts, see Section \ref{sec.Details}) under this rule is:
 \begin{equation}
 \begin{aligned}
-(E_{\set}^2 \alpha_{\EE} & + I_{\set}^2 \alpha_{\EI}) E_{\set} g_E W_{\IE\up} \\
-> & + (E_{\set}^2 \alpha_{\IE} + I_{\set}^2 \alpha_{\II}) I_{\set}(W_{\EE\up} g_E - 1) \\
-& + (E_{\set}^2 \alpha_{\EE} + I_{\set}^2 \alpha_{\EI}) \Theta_I g_E
+(E_{\set}^2 & \alpha_{\IE} + I_{\set}^2 \alpha_{\II}) I_{\set}(W_{\EE\up} g_E - 1) < \\
+(E_{\set}^2 & \alpha_{\EE} + I_{\set}^2 \alpha_{\EI}) (E_{\set} W_{\IE\up} g_E - \Theta_I g_E)
 \end{aligned}
 \label{eq.SH_stable_cond_v1_summary}
 \end{equation}
-
 
 
 
@@ -176,15 +174,13 @@ In continuous-time dynamics, the equations for the Cross-Homeostatic learning ru
 \noindent and its stability condition in terms of the free weights $W_{\EE}$ and $W_{\IE}$ reads:
 \begin{equation}
 \begin{aligned}
-(E_{\set}^2 \alpha_{\EE} & + I_{\set}^2 \alpha_{\EI}) I_{\set} g_E W_{\IE\up} \\
-& >
--(E_{\set}^2 \alpha_{\IE} + I_{\set}^2 \alpha_{\II}) E_{\set} g_E W_{\EE\up} \\
-& +
-(E_{\set}^2 \alpha_{\IE} + I_{\set}^2 \alpha_{\II}) (\Theta_E g_E + E_{\set})
+(E_{\set}^2 \alpha_{\EE} & + I_{\set}^2 \alpha_{\EI}) I_{\set} W_{\IE\up} g_E \\
+> - & 
+(E_{\set}^2 \alpha_{\IE} + I_{\set}^2 \alpha_{\II}) \\
+& ((W_{\EE\up} g_E - 1)E_{\set} - \Theta_E g_E)
 \end{aligned}
 \label{eq.CH_stable_cond_v1}
 \end{equation}
-
 
 
 
@@ -243,8 +239,8 @@ The equations for the Two-Term learning rule in continuous-time dynamics are
 \noindent and its stability condition in terms of the free weights $W_{\EE}$ and $W_{\IE}$ is
 \begin{equation}
 \begin{aligned}
-(I_{\set} \alpha & + E_{\set} \beta) g_E W_{\IE\up} \\
-& > (I_{\set} \beta - E_{\set} \alpha) g_E W_{\EE\up} \\
+(I_{\set} \alpha & + E_{\set} \beta) W_{\IE\up} g_E \\
+& > (I_{\set} \beta - E_{\set} \alpha) W_{\EE\up} g_E \\
 & + (\Theta_E g_E + E_{\set}) \alpha + (\Theta_I g_E - I_{\set}) \beta
 \end{aligned}
 \label{eq.TT_stable_cond_v1}
@@ -797,9 +793,8 @@ D & = 2(R^2\alpha_3 + \alpha_4)(R^2 + \alpha_2)/R
 To determine the sign of the real part of Eq.\ \ref{eq.SH_eigvals}, first note that the factor $D$ is positive definite. Second, $C$ must be positive because it is related to one of the stability conditions of the neural subsystem (Eq.\ \ref{eq.detcond_orig}, after substituting back to dimensionalized quantities). Note next that $A^2 - DC$ is less than $A^2$ (since $C$ and $D$ are positive), and thus the square root is either real and less than $|A|$ or imaginary, both cases leading to $\RE(A \pm \sqrt{A^2-DC}) < 0$ if $A<0$. The learning rule is then stable (both eigenvalues have negative real part) if $A<0$, which in terms of the original parameters and free weights $W_{\EE}$ and $W_{\IE}$ reads:
 \begin{equation}
 \begin{aligned}
-(E_{\set}^2 \alpha_{\EE} & + I_{\set}^2 \alpha_{\EI}) E_{\set} g_E W_{\IE\up} \\
-> & + (E_{\set}^2 \alpha_{\IE} + I_{\set}^2 \alpha_{\II}) I_{\set}(W_{\EE\up} g_E - 1) \\
-& + (E_{\set}^2 \alpha_{\EE} + I_{\set}^2 \alpha_{\EI}) \Theta_I g_E
+(E_{\set}^2 & \alpha_{\IE} + I_{\set}^2 \alpha_{\II}) I_{\set}(W_{\EE\up} g_E - 1) < \\
+(E_{\set}^2 & \alpha_{\EE} + I_{\set}^2 \alpha_{\EI}) (E_{\set} W_{\IE\up} g_E - \Theta_I g_E)
 \end{aligned}
 \label{eq.SH_stable_cond_v1}
 \end{equation}
@@ -861,16 +856,21 @@ The stability calculations for the rest of the rules follow very similar paths. 
 \subsection{Stability of the rules in a non-paradoxical regime}
 \label{sec.nonparadoxical}
 
-All results above were developed with the neural subsystem set in the paradoxical regime---that is, the region in ($W_{\EE},W_{\IE}$) leading to a stable fixed point was completely within the paradoxical region ($W_{\EE}g_E > 1$). In order to show the importance of the paradoxical behavior for the stability of the learning rules, we also computed the stability conditions of every learning rule in a more general setting where the excitatory subpopulation in the neural subsystem has an external, constant, excitatory input current $I_{\ext}$. This allows the neural subsystem to display both paradoxical and non-paradoxical stable behavior (in the second case, at the expense of the fixed point not being an inhibition-stabilized fixed point). The results can be found in the following SageMath-Jupyter notebooks:
-\begin{itemize}
-\item[] {\tt upstates-Neural subsystem stability-with Iext.ipynb}
-\item[] {\tt upstates-Homeostatic stability-with Iext.ipynb}
-\item[] {\tt upstates-TwoTerm stability-with Iext.ipynb}
-\item[] {\tt upstates-SynapticScaling stability-with Iext.ipynb}
-\item[] {\tt upstates-ForcedBalance stability-with Iext.ipynb}
-\end{itemize}
+All results above were developed with the neural subsystem set in the paradoxical regime---that is, the region in ($W_{\EE},W_{\IE}$) leading to a stable fixed point was completely within the paradoxical region ($W_{\EE}g_E > 1$). In order to show the importance of the paradoxical behavior for the stability of the learning rules, we also computed the stability conditions of every learning rule in a more general setting where the excitatory subpopulation in the neural subsystem has an external, constant, excitatory input current $I_{\ext}$. This allows the neural subsystem to display both paradoxical and non-paradoxical stable behavior (in the second case, at the expense of the fixed point not being an inhibition-stabilized fixed point; see {\tt upstates-Neural subsystem stability-with Iext.ipynb}).
 
-\noindent (The stability condition of the Cross-Homeostatic learning rule doesn't depend on $I_{\ext}$.)
+
+\subsubsection{Homeostatic with $I_{ext}$}
+
+
+(---TBD---)
+
+{\tt upstates-Homeostatic stability-with Iext.ipynb}
+{\tt upstates-CrossHomeostatic stability-with Iext.ipynb}
+{\tt upstates-TwoTerm stability-with Iext.ipynb}
+{\tt upstates-SynapticScaling stability-with Iext.ipynb}
+{\tt upstates-ForcedBalance stability-with Iext.ipynb}
+
+
 
 
 
