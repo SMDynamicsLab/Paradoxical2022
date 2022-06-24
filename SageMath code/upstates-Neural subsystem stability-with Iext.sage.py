@@ -88,7 +88,6 @@ values_nonparadoxical = [g_E==0.5,g_I==4,E_set==5,I_set==14,Theta_E==4.8,Theta_I
 
 
 # comment out accordingly
-#W_XY0 = [W_EE==5,W_EI==2,W_IE==10,W_II==2] # paradoxical value (g_E=1)
 W_XY0 = [W_EE==5,W_EI==2,W_IE==10,W_II==2] # paradoxical value (g_E=1)
 values = values_paradoxical
 #W_XY0 = [W_EE==1.5,W_EI==1,W_IE==15,W_II==2] # nonparadoxical value (g_E=0.5)
