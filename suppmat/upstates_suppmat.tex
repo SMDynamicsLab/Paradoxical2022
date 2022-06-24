@@ -861,7 +861,7 @@ All results above were developed with the neural subsystem set in the paradoxica
 
 \subsubsection{{\em Homeostatic} with $I_{\ext}$}
 
-The stability condition doesn't depend on $I_{\ext}$ and it reads the same as Eq.\ \ref{eq.SH_stable_cond_v1}:
+The stability condition doesn't depend on $I_{\ext}$ and it reads the same as Eq.\ \ref{eq.SH_stable_cond_v1_summary}:
 \begin{equation}
 \begin{aligned}
 (E_{\set}^2 & \alpha_{\IE} + I_{\set}^2 \alpha_{\II}) I_{\set}(W_{\EE\up} g_E - 1) < \\
@@ -912,7 +912,7 @@ The stability condition with $I_{\ext}$ is:
 \label{eq.TT_stable_cond_v1_nonparadox}
 \end{equation}
 
-\noindent which is very similar to Eq.\ \ref{eq.TT_stable_cond_v1_summary} except that it has ($\Theta_E - I_{\ext}$) instead of just $\Theta_E$. From this it should be evident that the condition will still hold for any positive value of $I_{\ext}$ (right-hand side decreases).
+\noindent which is very similar to Eq.\ \ref{eq.TT_stable_cond_v1_summary} except that it has ($\Theta_E - I_{\ext}$) instead of just $\Theta_E$. From this it should be evident that the larger the value of $I_{\ext}$ (right-hand side decreases) the larger the stability region.
 
 (SageMath code in {\tt upstates-TwoTerm stability-with Iext.ipynb})
 
@@ -966,7 +966,7 @@ b_2^\prime & = 2E_{\set} \Theta_I \, \alpha_1 \, g_E g_I^2 + E_{\set}^2 \, \alph
 \end{aligned}
 \end{displaymath}
 
-\noindent which are very similar to Eqs.\ \ref{eq.FB_stable_cond_summary} except that there is a ($\Theta_E - I_{\ext}$) instead of just $\Theta_E$. From this it should be evident that including a positive $I_{\ext}$ will increase the chances that the conditions hold, because it makes the left-hand sides decrease.
+\noindent which are very similar to Eqs.\ \ref{eq.FB_stable_cond_summary} except that there is a ($\Theta_E - I_{\ext}$) instead of just $\Theta_E$. From this it should be evident that the larger the value of $I_{\ext}$ (left-hand side decreases) the larger the stability region.
 
 (SageMath code in {\tt upstates-ForcedBalance stability-with Iext.ipynb})
 
