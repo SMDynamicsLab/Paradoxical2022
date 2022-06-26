@@ -1,5 +1,5 @@
-### "Orchestrated Excitatory and Inhibitory Learning Rules Lead to the Unsupervised Emergence of Self-sustained and Inhibition-stabilized Dynamics"
-Saray Soldado-Magraner, Rodrigo Laje, Dean V. Buonomano
+### "Paradoxical Self-sustained Dynamics Emerge from Orchestrated Excitatory and Inhibitory Homeostatic Rules"
+Saray Soldado-Magraner, Mike Seay, Rodrigo Laje, Dean V. Buonomano (2022)
 
 - Supplementary Material
 - SageMath code (analytical stability analyses)
