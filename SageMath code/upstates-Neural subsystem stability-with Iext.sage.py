@@ -3,10 +3,10 @@
 
 # # Up states: Stability of the neural subsystem
 
-# Soldado-Magraner, Laje & Buonomano (2021)  
-# Author: Rodrigo Laje
+# #### (With constant input current $I_{ext}$ in order to have a non-paradoxical fixed point.)
 
-# (With constant input current $I_{ext}$ in order to have a non-paradoxical fixed point.)
+# Soldado-Magraner, Seay, Laje & Buonomano (2022)  
+# Author: Rodrigo Laje
 
 # ## Neural dynamics
 
